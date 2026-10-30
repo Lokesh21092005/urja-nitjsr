@@ -3,7 +3,7 @@ import "./PointsTable.css";
 import Footer from "../Footer/Footer.jsx";
 
 const API_URL = (
-  import.meta.env.VITE_API_URL || "https://urja-2026.onrender.com"
+  import.meta.env.VITE_API_URL || "https://urja-nitjsr.onrender.com"
 ).replace(/\/$/, "");
 
 const SCORES_API_URL = `${API_URL}/api/scores`;

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./AdminDashboard.css";
 
 const API_URL = (
-  import.meta.env.VITE_API_URL || "https://urja-2026.onrender.com"
+  import.meta.env.VITE_API_URL || "https://urja-nitjsr.onrender.com"
 ).replace(/\/$/, "");
 
 /* ─── Allowed base teams ─────────────────────────────────── */
