@@ -15,23 +15,14 @@ const app = express();
 
 // --------------- Middleware ---------------
 
-// Allow the URJA frontend origins explicitly.
+// Public API is also consumed by GitHub Pages and local development.
 app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  const isAllowedOrigin =
-    !origin ||
-    /^(https?:\/\/localhost(:\d+)?|https?:\/\/127\.0\.0\.1(:\d+)?)$/.test(origin) ||
-    /^https:\/\/([a-z0-9-]+\.)?urja-nit-jsr\.com$/i.test(origin);
-
-  if (origin && isAllowedOrigin) {
-    res.header("Access-Control-Allow-Origin", origin);
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
-  }
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
 
   if (req.method === "OPTIONS") {
-    return res.sendStatus(isAllowedOrigin ? 204 : 403);
+    return res.sendStatus(204);
   }
   next();
 });
