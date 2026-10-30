@@ -1,10 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const path = require("path");
 const connectDB = require("./config/db");
 
-// Load env variables
-dotenv.config();
+// Load env variables from backend/.env even when the server is started elsewhere.
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 // Import routes
 const authRoutes = require("./routes/auth");

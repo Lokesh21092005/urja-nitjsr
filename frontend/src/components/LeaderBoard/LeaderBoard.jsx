@@ -39,13 +39,13 @@ const getPositionClass = (position) => {
 /* -------------------------------------------------------
    Medal
 ------------------------------------------------------- */
-const getMedal = (position) => {
-  if (position === 1) return "🥇";
-  if (position === 2) return "🥈";
-  if (position === 3) return "🥉";
+// const getMedal = (position) => {
+//   if (position === 1) return "🥇";
+//   if (position === 2) return "🥈";
+//   if (position === 3) return "🥉";
 
-  return position;
-};
+//   return position;
+// };
 
 /* -------------------------------------------------------
    Main Component
