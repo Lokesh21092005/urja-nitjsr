@@ -223,7 +223,7 @@ function calculateBranchStandings(documents) {
     if (String(doc?.stage || "").trim().toLowerCase() !== "knockout") continue;
 
     const rounds = Array.isArray(doc?.knockout?.rounds) ? doc.knockout.rounds : [];
-    const finalRound = [...rounds].reverse().find((round) => /final/i.test(round?.name || "")) || rounds[rounds.length - 1];
+    const finalRound = [...rounds].reverse().find((round) => /^final$/i.test(String(round?.name || "").trim())) || null;
     const finalMatches = Array.isArray(finalRound?.matches) ? finalRound.matches : [];
     const finalMatch = finalMatches[finalMatches.length - 1];
 

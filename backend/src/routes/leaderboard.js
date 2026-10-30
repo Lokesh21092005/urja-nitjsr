@@ -19,7 +19,7 @@ const router = express.Router();
  */
 router.get("/", async (req, res) => {
   try {
-    const allScores = await Score.find({});
+    const allScores = await Score.find({}).lean();
     const standings = calculateBranchStandings(allScores);
 
     // Convert to the exact array format the frontend/API expects
