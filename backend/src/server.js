@@ -51,11 +51,12 @@ app.use(
         allowedOrigins.includes(origin) ||
         origin.endsWith(".github.io") ||
         origin.includes("localhost") ||
-        origin.includes("127.0.0.1")
+        origin.includes("127.0.0.1") ||
+        /^https:\/\/([a-z0-9-]+\.)?urja-nit-jsr\.com$/i.test(origin)
       ) {
         return callback(null, true);
       }
-      return callback(new Error("Not allowed by CORS"));
+      return callback(null, false);
     },
     credentials: true,
   })
