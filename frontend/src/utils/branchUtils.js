@@ -210,15 +210,21 @@ export function calculateBranchStandings(documents) {
       const headings = pointsTable.headings.map((heading) => String(heading).trim().toLowerCase());
       const positionIdx = headings.indexOf("position");
       const teamIdx = headings.indexOf("team");
+      const pointsIdx = headings.indexOf("points");
       if (positionIdx === -1 || teamIdx === -1) continue;
 
-      const athleticsPoints = { 1: 5, 2: 3, 3: 2 };
+      const defaultPositionPoints = { 1: 5, 2: 3, 3: 2 };
       for (const row of pointsTable.data) {
         if (!Array.isArray(row)) continue;
         const position = Number.parseInt(row[positionIdx], 10);
         if (gender === "Girls" && position === 3) continue;
-        if (!athleticsPoints[position]) continue;
-        awardTeam(String(row[teamIdx] || "").trim(), athleticsPoints[position], sport, gender);
+
+        const enteredPoints = pointsIdx === -1 ? NaN : Number(row[pointsIdx]);
+        const points = Number.isFinite(enteredPoints) && enteredPoints >= 0
+          ? enteredPoints
+          : defaultPositionPoints[position];
+        if (!Number.isFinite(points) || points <= 0) continue;
+        awardTeam(String(row[teamIdx] || "").trim(), points, sport, gender);
       }
       continue;
     }
