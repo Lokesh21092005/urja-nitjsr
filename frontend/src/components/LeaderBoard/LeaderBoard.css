@@ -1688,6 +1688,28 @@
 
 }
 
+.podium-card[role="button"] {
+  cursor: pointer;
+}
+
+.podium-card[role="button"]:hover,
+.podium-card[role="button"]:focus-visible {
+  outline: 2px solid rgba(88, 215, 255, 0.75);
+  outline-offset: 4px;
+  transform: translateY(-4px);
+}
+
+.branch-breakdown-row {
+  cursor: pointer;
+}
+
+.branch-breakdown-row:hover,
+.branch-breakdown-row:focus-visible {
+  outline: 1px solid rgba(88, 215, 255, 0.55);
+  outline-offset: -1px;
+  background: rgba(88, 215, 255, 0.06);
+}
+
 .branch-breakdown-button {
   background: none;
   border: 0;

@@ -424,7 +424,19 @@ const LeaderBoard = () => {
             {topThree[1] && (
               <div className="podium-wrapper second-wrapper">
 
-                <div className="podium-card second">
+                <div
+                  className="podium-card second"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View ${topThree[1].branch} points breakdown`}
+                  onClick={() => setSelectedBranch(topThree[1].branch)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setSelectedBranch(topThree[1].branch);
+                    }
+                  }}
+                >
 
                   <div className="podium-medal">
                     🥈
@@ -435,13 +447,7 @@ const LeaderBoard = () => {
                   </div>
 
                   <h3>
-                    <button
-                      className="branch-breakdown-button"
-                      type="button"
-                      onClick={() => setSelectedBranch(topThree[1].branch)}
-                    >
-                      {topThree[1].branch}
-                    </button>
+                    {topThree[1].branch}
                   </h3>
 
                   <div className="podium-points">
@@ -464,7 +470,19 @@ const LeaderBoard = () => {
             {topThree[0] && (
               <div className="podium-wrapper first-wrapper">
 
-                <div className="podium-card first">
+                <div
+                  className="podium-card first"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View ${topThree[0].branch} points breakdown`}
+                  onClick={() => setSelectedBranch(topThree[0].branch)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setSelectedBranch(topThree[0].branch);
+                    }
+                  }}
+                >
 
                   <div className="champion-tag">
                     CURRENT LEADER
@@ -479,13 +497,7 @@ const LeaderBoard = () => {
                   </div>
 
                   <h3>
-                    <button
-                      className="branch-breakdown-button"
-                      type="button"
-                      onClick={() => setSelectedBranch(topThree[0].branch)}
-                    >
-                      {topThree[0].branch}
-                    </button>
+                    {topThree[0].branch}
                   </h3>
 
                   <div className="podium-points">
@@ -508,7 +520,19 @@ const LeaderBoard = () => {
             {topThree[2] && (
               <div className="podium-wrapper third-wrapper">
 
-                <div className="podium-card third">
+                <div
+                  className="podium-card third"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View ${topThree[2].branch} points breakdown`}
+                  onClick={() => setSelectedBranch(topThree[2].branch)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setSelectedBranch(topThree[2].branch);
+                    }
+                  }}
+                >
 
                   <div className="podium-medal">
                     🥉
@@ -519,13 +543,7 @@ const LeaderBoard = () => {
                   </div>
 
                   <h3>
-                    <button
-                      className="branch-breakdown-button"
-                      type="button"
-                      onClick={() => setSelectedBranch(topThree[2].branch)}
-                    >
-                      {topThree[2].branch}
-                    </button>
+                    {topThree[2].branch}
                   </h3>
 
                   <div className="podium-points">
@@ -611,7 +629,17 @@ const LeaderBoard = () => {
 
                   <tr
                     key={branch.branch}
-                    className={getPositionClass(index + 4)}
+                    className={`${getPositionClass(index + 4)} branch-breakdown-row`}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`View ${branch.branch} points breakdown`}
+                    onClick={() => setSelectedBranch(branch.branch)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        setSelectedBranch(branch.branch);
+                      }
+                    }}
                   >
 
                     {/* Position */}
@@ -628,13 +656,9 @@ const LeaderBoard = () => {
                     {/* Branch */}
                     <td>
 
-                      <button
-                        className="branch-name branch-breakdown-button"
-                        type="button"
-                        onClick={() => setSelectedBranch(branch.branch)}
-                      >
+                      <div className="branch-name">
                         {branch.branch}
-                      </button>
+                      </div>
 
                     </td>
 
