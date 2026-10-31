@@ -188,12 +188,14 @@ export function calculateBranchStandings(documents) {
     const awardGender = String(teamName || "").includes("+") ? "Girls" : gender;
     const constituents = getConstituentBranches(teamName, awardGender);
 
+    const pointsPerBranch = constituents.length > 0 ? medalPoints / constituents.length : 0;
+
     for (const branch of constituents) {
       if (!branchMap[branch]) continue;
-      branchMap[branch].points += medalPoints;
-      branchMap[branch].totalPoints += medalPoints;
+      branchMap[branch].points += pointsPerBranch;
+      branchMap[branch].totalPoints += pointsPerBranch;
       branchMap[branch].breakdown[sport] =
-        (branchMap[branch].breakdown[sport] || 0) + medalPoints;
+        (branchMap[branch].breakdown[sport] || 0) + pointsPerBranch;
     }
   };
 

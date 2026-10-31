@@ -9,6 +9,11 @@ const API_URL = (
 
 const SCORES_API_URL = `${API_URL}/api/scores`;
 
+const formatPoints = (points) => {
+  const value = Number(points) || 0;
+  return Number.isInteger(value) ? String(value) : value.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+};
+
 /* -------------------------------------------------------
    Build overall branch leaderboard
 
@@ -451,7 +456,7 @@ const LeaderBoard = () => {
                   </h3>
 
                   <div className="podium-points">
-                    {topThree[1].points}
+                    {formatPoints(topThree[1].points)}
                     <span>PTS</span>
                   </div>
 
@@ -501,7 +506,7 @@ const LeaderBoard = () => {
                   </h3>
 
                   <div className="podium-points">
-                    {topThree[0].points}
+                    {formatPoints(topThree[0].points)}
                     <span>PTS</span>
                   </div>
 
@@ -547,7 +552,7 @@ const LeaderBoard = () => {
                   </h3>
 
                   <div className="podium-points">
-                    {topThree[2].points}
+                    {formatPoints(topThree[2].points)}
                     <span>PTS</span>
                   </div>
 
@@ -639,7 +644,7 @@ const LeaderBoard = () => {
                     <td>
 
                       <span className="points-value">
-                        {branch.points}
+                        {formatPoints(branch.points)}
                       </span>
 
                     </td>
@@ -683,9 +688,9 @@ const LeaderBoard = () => {
             </div>
             <div className="branch-breakdown-list">
               {Object.entries(selectedBranchData.breakdown || {}).map(([sport, points]) => (
-                <div className="branch-breakdown-item" key={sport}><span>{sport}</span><strong>{points} pts</strong></div>
+                <div className="branch-breakdown-item" key={sport}><span>{sport}</span><strong>{formatPoints(points)} pts</strong></div>
               ))}
-              <div className="branch-breakdown-total"><span>Total</span><strong>{selectedBranchData.points} pts</strong></div>
+              <div className="branch-breakdown-total"><span>Total</span><strong>{formatPoints(selectedBranchData.points)} pts</strong></div>
             </div>
           </div>
         )}

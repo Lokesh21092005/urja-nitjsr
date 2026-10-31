@@ -130,11 +130,11 @@ test("Standings: league-stage points are excluded; combined final teams receive 
   const standings = calculateBranchStandings(mockDocs);
   assert.equal(standings.length, 8);
   assert.equal(standings.find((s) => s.branch === "ECE + EE"), undefined);
-  assert.equal(standings.find((s) => s.branch === "ECE").points, 10);
-  assert.equal(standings.find((s) => s.branch === "EE").points, 10);
-  assert.equal(standings.find((s) => s.branch === "ME").points, 7);
-  assert.equal(standings.find((s) => s.branch === "PG").points, 7);
-  assert.equal(standings.find((s) => s.branch === "CSE").points, 5);
+  assert.equal(standings.find((s) => s.branch === "ECE").points, 5);
+  assert.equal(standings.find((s) => s.branch === "EE").points, 5);
+  assert.equal(standings.find((s) => s.branch === "ME").points, 3.5);
+  assert.equal(standings.find((s) => s.branch === "PG").points, 3.5);
+  assert.equal(standings.find((s) => s.branch === "CSE").points, 0);
 });
 
 test("Standings: combined final winners and third-place teams receive points for both branches", () => {
@@ -150,11 +150,11 @@ test("Standings: combined final winners and third-place teams receive points for
   }];
 
   const standings = calculateBranchStandings(mockDocs);
-  assert.equal(standings.find((branch) => branch.branch === "ME").points, 10);
-  assert.equal(standings.find((branch) => branch.branch === "EE").points, 10);
-  assert.equal(standings.find((branch) => branch.branch === "PIE+ECM").points, 7);
-  assert.equal(standings.find((branch) => branch.branch === "ECE").points, 12);
-  assert.equal(standings.find((branch) => branch.branch === "MME").points, 5);
+  assert.equal(standings.find((branch) => branch.branch === "ME").points, 5);
+  assert.equal(standings.find((branch) => branch.branch === "EE").points, 5);
+  assert.equal(standings.find((branch) => branch.branch === "PIE+ECM").points, 3.5);
+  assert.equal(standings.find((branch) => branch.branch === "ECE").points, 3.5);
+  assert.equal(standings.find((branch) => branch.branch === "MME").points, 0);
 });
 
 test("Standings: boys combined final teams receive medal points per branch", () => {
@@ -170,12 +170,12 @@ test("Standings: boys combined final teams receive medal points per branch", () 
   }];
 
   const standings = calculateBranchStandings(mockDocs);
-  assert.equal(standings.find((branch) => branch.branch === "ME").points, 10);
-  assert.equal(standings.find((branch) => branch.branch === "EE").points, 10);
-  assert.equal(standings.find((branch) => branch.branch === "PIE+ECM").points, 7);
-  assert.equal(standings.find((branch) => branch.branch === "ECE").points, 7);
-  assert.equal(standings.find((branch) => branch.branch === "MME").points, 5);
-  assert.equal(standings.find((branch) => branch.branch === "CSE").points, 5);
+  assert.equal(standings.find((branch) => branch.branch === "ME").points, 5);
+  assert.equal(standings.find((branch) => branch.branch === "EE").points, 5);
+  assert.equal(standings.find((branch) => branch.branch === "PIE+ECM").points, 3.5);
+  assert.equal(standings.find((branch) => branch.branch === "ECE").points, 3.5);
+  assert.equal(standings.find((branch) => branch.branch === "MME").points, 2.5);
+  assert.equal(standings.find((branch) => branch.branch === "CSE").points, 2.5);
 });
 
 test("Standings: reversed combined teams are handled without league-stage points", () => {
