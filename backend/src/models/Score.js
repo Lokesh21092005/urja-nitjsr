@@ -11,7 +11,7 @@ const scoreSchema = new mongoose.Schema(
     gender: {
       type: String,
       required: true,
-      enum: ["Boys", "Girls"],
+      enum: ["Boys", "Girls", "Combined"],
     },
     event: {
       type: String,

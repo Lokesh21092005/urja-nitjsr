@@ -123,10 +123,9 @@ const sportsDataMap = {
     stages: ["Group Stage"],
   },
   Parade: {
-    genders: ["Boys", "Girls"],
+    genders: ["Combined"],
     pools: {
-      Boys: ["Parade"],
-      Girls: ["Parade"],
+      Combined: ["Parade"],
     },
     stages: ["Group Stage"],
   },
@@ -1253,29 +1252,31 @@ export default function AdminDashboard() {
           </select>
         </div>
 
-        <div className="admin-select-group">
-          <label>Gender</label>
+        {selectedSport !== "Parade" && (
+          <div className="admin-select-group">
+            <label>Gender</label>
 
-          <select
-            value={selectedGender}
-            onChange={(event) =>
-              setSelectedGender(
-                event.target.value
+            <select
+              value={selectedGender}
+              onChange={(event) =>
+                setSelectedGender(
+                  event.target.value
+                )
+              }
+            >
+              {genders.map(
+                (gender) => (
+                  <option
+                    key={gender}
+                    value={gender}
+                  >
+                    {gender}
+                  </option>
               )
-            }
-          >
-            {genders.map(
-              (gender) => (
-                <option
-                  key={gender}
-                  value={gender}
-                >
-                  {gender}
-                </option>
-              )
-            )}
-          </select>
-        </div>
+              )}
+            </select>
+          </div>
+        )}
 
         {stages.length > 1 &&
           !isPositionSport(selectedSport) && (

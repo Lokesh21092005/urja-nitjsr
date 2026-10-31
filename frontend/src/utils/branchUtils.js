@@ -199,9 +199,18 @@ export function calculateBranchStandings(documents) {
     }
   };
 
+  const paradeDocuments = documents.filter((doc) => String(doc?.sport || "").trim().toLowerCase() === "parade");
+  const combinedParade = paradeDocuments.find((doc) => String(doc?.gender || "").trim() === "Combined");
+  const populatedParade = paradeDocuments.find((doc) => doc?.pointsTable?.data?.length > 0);
+  const canonicalParade = combinedParade || populatedParade || paradeDocuments[0] || null;
+
   for (const doc of documents) {
     const sport = String(doc?.sport || "").trim();
     const gender = String(doc?.gender || "").trim();
+
+    if (sport.toLowerCase() === "parade") {
+      if (!canonicalParade || doc !== canonicalParade) continue;
+    }
 
     if (["athletics", "yoga", "parade"].includes(sport.toLowerCase())) {
       const pointsTable = doc?.pointsTable;
@@ -217,7 +226,7 @@ export function calculateBranchStandings(documents) {
       for (const row of pointsTable.data) {
         if (!Array.isArray(row)) continue;
         const position = Number.parseInt(row[positionIdx], 10);
-        if (gender === "Girls" && position === 3) continue;
+        if (sport.toLowerCase() !== "parade" && gender === "Girls" && position === 3) continue;
 
         const enteredPoints = pointsIdx === -1 ? NaN : Number(row[pointsIdx]);
         const points = Number.isFinite(enteredPoints) && enteredPoints >= 0

@@ -18,6 +18,18 @@ router.get("/", async (req, res) => {
     if (req.query.event) filter.event = req.query.event;
     if (req.query.stage) filter.stage = req.query.stage;
 
+    if (String(req.query.sport || "").trim().toLowerCase() === "parade" && req.query.gender === "Combined") {
+      const paradeScores = await Score.find({ sport: "Parade" }).sort({ gender: 1, event: 1 });
+      const populated = paradeScores.find((score) => score.pointsTable?.data?.length > 0);
+      const combinedScore = paradeScores.find((score) => score.gender === "Combined");
+      const source = combinedScore || populated || paradeScores[0];
+
+      if (!source) return res.json([]);
+      const result = source.toObject();
+      result.gender = "Combined";
+      return res.json([result]);
+    }
+
     const scores = await Score.find(filter).sort({ sport: 1, gender: 1, event: 1 });
     res.json(scores);
   } catch (error) {
