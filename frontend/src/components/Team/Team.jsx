@@ -17,6 +17,12 @@ const supercoreTeamData = [
         image: 'aryankumarsingh.jpg'
     },
     {
+        post: 'Joint Sports Secretary',
+        name: 'Saniya Jamal',
+        regNo: '2024UGEC086',
+        image: 'saniyajamal.jpg'
+    },
+    {
         post: 'General Secretary',
         name: 'Ankit Kumar Sharma',
         regNo: '2023UGMM011',
