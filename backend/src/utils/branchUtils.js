@@ -203,7 +203,7 @@ function calculateBranchStandings(documents) {
     const sport = String(doc?.sport || "").trim();
     const gender = String(doc?.gender || "").trim();
 
-    if (["athletics", "yoga"].includes(sport.toLowerCase())) {
+    if (["athletics", "yoga", "parade"].includes(sport.toLowerCase())) {
       const pointsTable = doc?.pointsTable;
       if (!pointsTable || !Array.isArray(pointsTable.headings) || !Array.isArray(pointsTable.data)) continue;
 

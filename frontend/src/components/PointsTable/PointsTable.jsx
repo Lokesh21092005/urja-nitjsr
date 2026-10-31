@@ -71,6 +71,11 @@ const sportsDataMap = {
     events: ["Yoga"],
     stages: ["Group Stage"],
   },
+  Parade: {
+    genders: ["Boys", "Girls"],
+    events: ["Parade"],
+    stages: ["Group Stage"],
+  },
 
   Hockey: {
     genders: ["Boys"],
@@ -110,6 +115,7 @@ const SPORT_ICONS = {
   Football: "⚽",
   Hockey: "🏑",
   Yoga: "🧘",
+  Parade: "🎖️",
   "Lawn Tennis": "🎾",
   "Table Tennis": "🏓",
   Volleyball: "🏐",
@@ -176,7 +182,7 @@ const PointsTable = () => {
   ======================================================= */
 
   const eventOptions = useMemo(() => {
-    if (selectedSport === "Athletics" || selectedSport === "Yoga") {
+    if (selectedSport === "Athletics" || selectedSport === "Yoga" || selectedSport === "Parade") {
       return currentSportConfig.events || [];
     }
 
@@ -319,9 +325,9 @@ const PointsTable = () => {
     setSelectedGender(firstGender);
     setSelectedStage(firstStage);
 
-    if (sport === "Athletics" || sport === "Yoga") {
+    if (sport === "Athletics" || sport === "Yoga" || sport === "Parade") {
       setSelectedEvent(
-        config?.events?.[0] || (sport === "Yoga" ? "Yoga" : "100m")
+        config?.events?.[0] || (sport === "Yoga" ? "Yoga" : sport === "Parade" ? "Parade" : "100m")
       );
     } else {
       setSelectedEvent(
@@ -337,9 +343,9 @@ const PointsTable = () => {
   const handleGenderChange = (gender) => {
     setSelectedGender(gender);
 
-    if (selectedSport === "Athletics" || selectedSport === "Yoga") {
+    if (selectedSport === "Athletics" || selectedSport === "Yoga" || selectedSport === "Parade") {
       setSelectedEvent(
-        currentSportConfig.events?.[0] || (selectedSport === "Yoga" ? "Yoga" : "100m")
+        currentSportConfig.events?.[0] || (selectedSport === "Yoga" ? "Yoga" : selectedSport === "Parade" ? "Parade" : "100m")
       );
     } else {
       setSelectedEvent(
@@ -360,8 +366,8 @@ const PointsTable = () => {
     } else {
       setSelectedEvent(
         eventOptions?.[0] ||
-          ((selectedSport === "Athletics" || selectedSport === "Yoga")
-            ? (selectedSport === "Yoga" ? "Yoga" : "100m")
+          ((selectedSport === "Athletics" || selectedSport === "Yoga" || selectedSport === "Parade")
+            ? (selectedSport === "Yoga" ? "Yoga" : selectedSport === "Parade" ? "Parade" : "100m")
             : "Pool A")
       );
     }
@@ -710,7 +716,7 @@ const PointsTable = () => {
           <div className="filter-group">
 
             <label>
-              {selectedSport === "Athletics" || selectedSport === "Yoga"
+              {selectedSport === "Athletics" || selectedSport === "Yoga" || selectedSport === "Parade"
                 ? "EVENT"
                 : "POOL"}
             </label>

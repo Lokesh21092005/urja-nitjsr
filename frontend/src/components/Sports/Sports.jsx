@@ -3,6 +3,8 @@ import './Sports.css';
 
 // Import all the sport content components
 import AthleticsRules from '../Rulebook/Athletics.jsx';
+import YogaRules from '../Rulebook/Yoga.jsx';
+import ParadeRules from '../Rulebook/Parade.jsx';
 import BadmintonRules from '../Rulebook/Badminton.jsx';
 import BasketballRules from '../Rulebook/Basketball.jsx';
 import ChessRules from '../Rulebook/Chess.jsx';
@@ -25,6 +27,8 @@ function Sports() {
     // List of sports with their emojis
     const sportsList = [
         { name: 'Athletics', emoji: '🏃‍♂️' },
+        { name: 'Yoga', emoji: '🧘' },
+        { name: 'Parade', emoji: '🎖️' },
         { name: 'Badminton', emoji: '🏸' },
         { name: 'Basketball', emoji: '🏀' },
         { name: 'Chess', emoji: '♟️' },
@@ -41,6 +45,8 @@ function Sports() {
     // Mapping of sport names to their respective components
    const SportComponents = {
     Athletics: AthleticsRules,
+    Yoga: YogaRules,
+    Parade: ParadeRules,
     Badminton: BadmintonRules,
     Basketball: BasketballRules,
     Chess: ChessRules,

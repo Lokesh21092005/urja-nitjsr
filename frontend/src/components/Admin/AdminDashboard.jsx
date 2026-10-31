@@ -21,7 +21,7 @@ const BASE_TEAMS = [
 
 /* ─── Sports config ──────────────────────────────────────── */
 
-const isPositionSport = (sport) => sport === "Athletics" || sport === "Yoga";
+const isPositionSport = (sport) => sport === "Athletics" || sport === "Yoga" || sport === "Parade";
 
 const sportsDataMap = {
   Athletics: {
@@ -119,6 +119,14 @@ const sportsDataMap = {
     pools: {
       Boys: ["Yoga"],
       Girls: ["Yoga"],
+    },
+    stages: ["Group Stage"],
+  },
+  Parade: {
+    genders: ["Boys", "Girls"],
+    pools: {
+      Boys: ["Parade"],
+      Girls: ["Parade"],
     },
     stages: ["Group Stage"],
   },
