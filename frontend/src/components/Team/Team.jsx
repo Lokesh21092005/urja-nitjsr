@@ -11,6 +11,12 @@ const supercoreTeamData = [
         image: 'prakharanand.jpg'
     },
     {
+        post: 'Joint Sports Secretary',
+        name: 'Aryan Kumar Singh',
+        regNo: '2024UGCE031',
+        image: 'aryankumarsingh.jpg'
+    },
+    {
         post: 'General Secretary',
         name: 'Ankit Kumar Sharma',
         regNo: '2023UGMM011',
@@ -78,10 +84,22 @@ const supercoreTeamData = [
         image: 'himanshuteotia.jpg'
     },
     {
+        post: 'Public Relations Head',
+        name: 'Atul Shakti',
+        regNo: '2023UGMM036',
+        image: 'atulshakti.jpg'
+    },
+    {
         post: 'Creative Head',
         name: 'Sarwar Ali',
         regNo: '2023UGEE055',
         image: 'sarwarali.jpg'
+    },
+    {
+        post: 'Creative Head',
+        name: 'Ishika Lall',
+        regNo: '2023UGMM067',
+        image: 'ishikalall.jpg'
     },
     {
         post: 'Medical Head',
