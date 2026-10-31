@@ -90,6 +90,12 @@ const supercoreTeamData = [
         image: 'ishanraj.jpg'
     },
     {
+        post: 'Medical Head',
+        name: 'Ameya Vikram Singh',
+        regNo: '2023UGME068',
+        image: 'ameyavikramsingh.jpg'
+    },
+    {
         post: 'Corporate Affairs Head',
         name: 'Harsh Sharma',
         regNo: '2023UGME047',
