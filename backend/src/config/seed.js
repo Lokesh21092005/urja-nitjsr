@@ -35,17 +35,18 @@ async function seed() {
     await mongoose.connect(process.env.MONGO_URI);
     console.log("✅ Connected to MongoDB");
 
+      await Admin.deleteMany({
+      email: { $in: ["admin1@urja.com", "admin2@urja.com"] },
+    });
+
     for (const adminData of admins) {
-      // Check if admin already exists
-      const existing = await Admin.findOne({ email: adminData.email });
-      if (existing) {
-        console.log(`⏭️  Admin "${adminData.email}" already exists, skipping.`);
-        continue;
+      if (!adminData.email || !adminData.password) {
+        throw new Error("Both ADMIN credentials must be configured.");
       }
 
-      const admin = new Admin(adminData);
-      await admin.save(); // password gets hashed by the pre-save hook
-      console.log(`✅ Created admin: ${adminData.email}`);
+      await Admin.deleteOne({ email: adminData.email });
+      await new Admin(adminData).save(); // password gets hashed by the pre-save hook
+      console.log(`✅ Updated admin: ${adminData.email}`);
     }
 
     console.log("\n🎉 Seeding complete!");
