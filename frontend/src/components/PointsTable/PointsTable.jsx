@@ -72,7 +72,7 @@ const sportsDataMap = {
     stages: ["Group Stage"],
   },
   Parade: {
-    genders: ["Boys", "Girls"],
+    genders: ["Combined"],
     events: ["Parade"],
     stages: ["Group Stage"],
   },
@@ -207,7 +207,7 @@ const PointsTable = () => {
         const params = new URLSearchParams();
 
         params.set("sport", selectedSport);
-        params.set("gender", selectedGender);
+        params.set("gender", selectedSport === "Parade" ? "Combined" : selectedGender);
         params.set("stage", selectedStage);
 
         if (selectedStage === "Knockout") {
@@ -649,35 +649,37 @@ const PointsTable = () => {
 
           {/* Gender */}
 
-          <div className="filter-group">
+          {selectedSport !== "Parade" && (
+            <div className="filter-group">
 
-            <label>GENDER</label>
+              <label>GENDER</label>
 
-            <select
-              value={selectedGender}
-              onChange={(event) =>
-                handleGenderChange(
-                  event.target.value
-                )
-              }
-            >
+              <select
+                value={selectedGender}
+                onChange={(event) =>
+                  handleGenderChange(
+                    event.target.value
+                  )
+                }
+              >
 
-              {currentSportConfig.genders?.map(
-                (gender) => (
+                {currentSportConfig.genders?.map(
+                  (gender) => (
 
-                  <option
-                    value={gender}
-                    key={gender}
-                  >
-                    {gender}
-                  </option>
+                    <option
+                      value={gender}
+                      key={gender}
+                    >
+                      {gender}
+                    </option>
 
-                )
-              )}
+                  )
+                )}
 
-            </select>
+              </select>
 
-          </div>
+            </div>
+          )}
 
           {/* Stage */}
 
@@ -813,7 +815,7 @@ const PointsTable = () => {
         <div className="selection-details">
 
           <span>
-            {selectedGender} • {selectedStage}
+            {selectedSport === "Parade" ? "Combined" : selectedGender} • {selectedStage}
           </span>
 
           <h2>
