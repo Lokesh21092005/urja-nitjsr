@@ -562,33 +562,6 @@ const LeaderBoard = () => {
 
           </div>
 
-          {selectedBranchData && (
-            <div className="branch-breakdown-panel" aria-live="polite">
-              <div className="branch-breakdown-heading">
-                <h3>{selectedBranchData.branch} POINT BREAKDOWN</h3>
-                <button
-                  type="button"
-                  aria-label="Close points breakdown"
-                  onClick={() => setSelectedBranch(null)}
-                >
-                  ×
-                </button>
-              </div>
-              <div className="branch-breakdown-list">
-                {Object.entries(selectedBranchData.breakdown || {}).map(([sport, points]) => (
-                  <div className="branch-breakdown-item" key={sport}>
-                    <span>{sport}</span>
-                    <strong>{points} pts</strong>
-                  </div>
-                ))}
-                <div className="branch-breakdown-total">
-                  <span>Total</span>
-                  <strong>{selectedBranchData.points} pts</strong>
-                </div>
-              </div>
-            </div>
-          )}
-
         </section>
       )}
 
@@ -700,6 +673,21 @@ const LeaderBoard = () => {
 
           </div>
 
+        )}
+
+        {selectedBranchData && (
+          <div className="branch-breakdown-panel" aria-live="polite">
+            <div className="branch-breakdown-heading">
+              <h3>{selectedBranchData.branch} POINT BREAKDOWN</h3>
+              <button type="button" aria-label="Close points breakdown" onClick={() => setSelectedBranch(null)}>×</button>
+            </div>
+            <div className="branch-breakdown-list">
+              {Object.entries(selectedBranchData.breakdown || {}).map(([sport, points]) => (
+                <div className="branch-breakdown-item" key={sport}><span>{sport}</span><strong>{points} pts</strong></div>
+              ))}
+              <div className="branch-breakdown-total"><span>Total</span><strong>{selectedBranchData.points} pts</strong></div>
+            </div>
+          </div>
         )}
 
       </section>
