@@ -1100,7 +1100,7 @@ const PointsTable = () => {
 
                     </div>
 
-                    {!/semi/i.test(round.name || "") && /final/i.test(round.name || "") && thirdPlaceMatch && (
+                    {selectedGender !== "Girls" && !/semi/i.test(round.name || "") && /final/i.test(round.name || "") && thirdPlaceMatch && (
                       <div className="third-place-section">
                         <div className="round-title">THIRD PLACE</div>
                         <div className="match-card third-place-card">

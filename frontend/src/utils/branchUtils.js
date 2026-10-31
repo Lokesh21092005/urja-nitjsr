@@ -214,6 +214,7 @@ export function calculateBranchStandings(documents) {
       for (const row of pointsTable.data) {
         if (!Array.isArray(row)) continue;
         const position = Number.parseInt(row[positionIdx], 10);
+        if (gender === "Girls" && position === 3) continue;
         if (!athleticsPoints[position]) continue;
         awardTeam(String(row[teamIdx] || "").trim(), athleticsPoints[position], sport, gender);
       }
@@ -237,7 +238,7 @@ export function calculateBranchStandings(documents) {
     }
 
     const thirdPlace = String(doc?.knockout?.thirdPlace?.match?.winner || "").trim();
-    if (thirdPlace) awardTeam(thirdPlace, 5, sport, gender);
+    if (gender !== "Girls" && thirdPlace) awardTeam(thirdPlace, 5, sport, gender);
   }
 
   const result = Object.values(branchMap);
