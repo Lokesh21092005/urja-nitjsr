@@ -66,6 +66,12 @@ const sportsDataMap = {
     stages: ["Group Stage", "Knockout"],
   },
 
+  Yoga: {
+    genders: ["Boys", "Girls"],
+    events: ["Yoga"],
+    stages: ["Group Stage"],
+  },
+
   Hockey: {
     genders: ["Boys"],
     pools: ["Pool A"],
@@ -103,6 +109,7 @@ const SPORT_ICONS = {
   Cricket: "🏏",
   Football: "⚽",
   Hockey: "🏑",
+  Yoga: "🧘",
   "Lawn Tennis": "🎾",
   "Table Tennis": "🏓",
   Volleyball: "🏐",
@@ -169,7 +176,7 @@ const PointsTable = () => {
   ======================================================= */
 
   const eventOptions = useMemo(() => {
-    if (selectedSport === "Athletics") {
+    if (selectedSport === "Athletics" || selectedSport === "Yoga") {
       return currentSportConfig.events || [];
     }
 
@@ -312,9 +319,9 @@ const PointsTable = () => {
     setSelectedGender(firstGender);
     setSelectedStage(firstStage);
 
-    if (sport === "Athletics") {
+    if (sport === "Athletics" || sport === "Yoga") {
       setSelectedEvent(
-        config?.events?.[0] || "100m"
+        config?.events?.[0] || (sport === "Yoga" ? "Yoga" : "100m")
       );
     } else {
       setSelectedEvent(
@@ -330,9 +337,9 @@ const PointsTable = () => {
   const handleGenderChange = (gender) => {
     setSelectedGender(gender);
 
-    if (selectedSport === "Athletics") {
+    if (selectedSport === "Athletics" || selectedSport === "Yoga") {
       setSelectedEvent(
-        currentSportConfig.events?.[0] || "100m"
+        currentSportConfig.events?.[0] || (selectedSport === "Yoga" ? "Yoga" : "100m")
       );
     } else {
       setSelectedEvent(
@@ -353,8 +360,8 @@ const PointsTable = () => {
     } else {
       setSelectedEvent(
         eventOptions?.[0] ||
-          (selectedSport === "Athletics"
-            ? "100m"
+          ((selectedSport === "Athletics" || selectedSport === "Yoga")
+            ? (selectedSport === "Yoga" ? "Yoga" : "100m")
             : "Pool A")
       );
     }
@@ -703,7 +710,7 @@ const PointsTable = () => {
           <div className="filter-group">
 
             <label>
-              {selectedSport === "Athletics"
+              {selectedSport === "Athletics" || selectedSport === "Yoga"
                 ? "EVENT"
                 : "POOL"}
             </label>

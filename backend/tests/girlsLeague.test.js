@@ -157,6 +157,20 @@ test("Standings: combined final winners and third-place teams receive points for
   assert.equal(standings.find((branch) => branch.branch === "MME").points, 0);
 });
 
+test("Standings: Yoga uses athletics podium points for both genders", () => {
+  const mockDocs = [
+    { sport: "Yoga", gender: "Boys", stage: "Group Stage", pointsTable: { headings: ["Position", "Team"], data: [[1, "ME"], [2, "MME"], [3, "CE"]] } },
+    { sport: "Yoga", gender: "Girls", stage: "Group Stage", pointsTable: { headings: ["Position", "Team"], data: [[1, "ECE"], [2, "EE"], [3, "CSE"]] } },
+  ];
+  const standings = calculateBranchStandings(mockDocs);
+  assert.equal(standings.find((branch) => branch.branch === "ME").points, 5);
+  assert.equal(standings.find((branch) => branch.branch === "MME").points, 3);
+  assert.equal(standings.find((branch) => branch.branch === "CE").points, 2);
+  assert.equal(standings.find((branch) => branch.branch === "ECE").points, 5);
+  assert.equal(standings.find((branch) => branch.branch === "EE").points, 3);
+  assert.equal(standings.find((branch) => branch.branch === "CSE").points, 0);
+});
+
 test("Standings: boys combined final teams receive medal points per branch", () => {
   const mockDocs = [{
     sport: "Basketball",

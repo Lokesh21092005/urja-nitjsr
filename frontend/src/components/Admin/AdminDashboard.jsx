@@ -21,6 +21,8 @@ const BASE_TEAMS = [
 
 /* ─── Sports config ──────────────────────────────────────── */
 
+const isPositionSport = (sport) => sport === "Athletics" || sport === "Yoga";
+
 const sportsDataMap = {
   Athletics: {
     genders: ["Boys", "Girls"],
@@ -112,6 +114,15 @@ const sportsDataMap = {
     stages: ["Group Stage", "Knockout"],
   },
 
+  Yoga: {
+    genders: ["Boys", "Girls"],
+    pools: {
+      Boys: ["Yoga"],
+      Girls: ["Yoga"],
+    },
+    stages: ["Group Stage"],
+  },
+
   Hockey: {
     genders: ["Boys"],
     pools: {
@@ -151,7 +162,7 @@ const sportsDataMap = {
 /* ─── Default table headings ─────────────────────────────── */
 
 const getDefaultHeadings = (sport) => {
-  if (sport === "Athletics") {
+  if (isPositionSport(sport)) {
     return ["Position", "Team", "Points"];
   }
 
@@ -495,7 +506,7 @@ export default function AdminDashboard() {
       cfg.pools[cfg.genders[0]] ||
       [];
 
-    if (selectedSport === "Athletics") {
+    if (isPositionSport(selectedSport)) {
       setSelectedStage("Group Stage");
 
       if (!pools.includes(selectedEvent)) {
@@ -538,12 +549,12 @@ export default function AdminDashboard() {
     try {
       const eventParam =
         selectedStage === "Knockout" &&
-        selectedSport !== "Athletics"
+        !isPositionSport(selectedSport)
           ? "Knockout"
           : selectedEvent;
 
       const stageParam =
-        selectedSport === "Athletics"
+        isPositionSport(selectedSport)
           ? "Group Stage"
           : selectedStage;
 
@@ -577,7 +588,7 @@ export default function AdminDashboard() {
       if (Array.isArray(data) && data.length > 0) {
         if (
           selectedStage === "Knockout" &&
-          selectedSport !== "Athletics"
+          !isPositionSport(selectedSport)
         ) {
           setEditData(
             JSON.parse(
@@ -612,7 +623,7 @@ export default function AdminDashboard() {
       } else {
         if (
           selectedStage === "Knockout" &&
-          selectedSport !== "Athletics"
+          !isPositionSport(selectedSport)
         ) {
           setEditData({
             rounds: [
@@ -716,12 +727,12 @@ export default function AdminDashboard() {
     try {
       const eventParam =
         selectedStage === "Knockout" &&
-        selectedSport !== "Athletics"
+        !isPositionSport(selectedSport)
           ? "Knockout"
           : selectedEvent;
 
       const stageParam =
-        selectedSport === "Athletics"
+        isPositionSport(selectedSport)
           ? "Group Stage"
           : selectedStage;
 
@@ -734,7 +745,7 @@ export default function AdminDashboard() {
 
       if (
         selectedStage === "Knockout" &&
-        selectedSport !== "Athletics"
+        !isPositionSport(selectedSport)
       ) {
         body.knockout = editData;
       } else {
@@ -1259,8 +1270,7 @@ export default function AdminDashboard() {
         </div>
 
         {stages.length > 1 &&
-          selectedSport !==
-            "Athletics" && (
+          !isPositionSport(selectedSport) && (
             <div className="admin-select-group">
               <label>Stage</label>
 
@@ -1288,15 +1298,11 @@ export default function AdminDashboard() {
             </div>
           )}
 
-        {(selectedSport ===
-          "Athletics" ||
-          (selectedStage ===
-            "Group Stage" &&
-            pools.length > 0)) && (
+        {(isPositionSport(selectedSport) ||
+          (selectedStage === "Group Stage" && pools.length > 0)) && (
           <div className="admin-select-group">
             <label>
-              {selectedSport ===
-              "Athletics"
+              {isPositionSport(selectedSport)
                 ? "Event"
                 : "Pool"}
             </label>
@@ -1347,8 +1353,7 @@ export default function AdminDashboard() {
         {!loading &&
           !fetchError &&
           editData &&
-          (selectedSport ===
-            "Athletics" ||
+          (isPositionSport(selectedSport) ||
             selectedStage ===
               "Group Stage") && (
             <div className="admin-table-section">
@@ -1568,8 +1573,7 @@ export default function AdminDashboard() {
         {!loading &&
           !fetchError &&
           editData &&
-          selectedSport !==
-            "Athletics" &&
+          !isPositionSport(selectedSport) &&
           selectedStage ===
             "Knockout" && (
             <div className="admin-knockout-section">
