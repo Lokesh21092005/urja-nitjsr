@@ -95,17 +95,19 @@ const sportsDataMap = {
   },
 
   Cricket: {
-    genders: ["Boys"],
+    genders: ["Boys", "Girls"],
     pools: {
       Boys: ["Pool A", "Pool B"],
+      Girls: ["Pool A", "Pool B"],
     },
     stages: ["Group Stage", "Knockout"],
   },
 
   Football: {
-    genders: ["Boys"],
+    genders: ["Boys", "Girls"],
     pools: {
       Boys: ["Pool A", "Pool B"],
+      Girls: ["Pool A", "Pool B"],
     },
     stages: ["Group Stage", "Knockout"],
   },

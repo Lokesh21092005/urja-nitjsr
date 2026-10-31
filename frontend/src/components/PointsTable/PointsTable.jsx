@@ -55,13 +55,13 @@ const sportsDataMap = {
   },
 
   Cricket: {
-    genders: ["Boys"],
+    genders: ["Boys", "Girls"],
     pools: ["Pool A", "Pool B"],
     stages: ["Group Stage", "Knockout"],
   },
 
   Football: {
-    genders: ["Boys"],
+    genders: ["Boys", "Girls"],
     pools: ["Pool A", "Pool B"],
     stages: ["Group Stage", "Knockout"],
   },
@@ -442,13 +442,16 @@ const PointsTable = () => {
     currentData.knockouts.forEach((knockout) => {
       if (Array.isArray(knockout.rounds)) {
         knockout.rounds.forEach((round) => {
+          if (selectedGender === "Girls" && /semi/i.test(round?.name || "")) {
+            return;
+          }
           rounds.push(round);
         });
       }
     });
 
     return rounds;
-  }, [currentData]);
+  }, [currentData, selectedGender]);
 
   /* =======================================================
      THIRD PLACE MATCH

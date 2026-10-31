@@ -1687,3 +1687,48 @@
   }
 
 }
+
+.branch-breakdown-button {
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  padding: 0;
+  text-transform: inherit;
+}
+
+.branch-breakdown-button:hover,
+.branch-breakdown-button:focus-visible {
+  color: #58d7ff;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.branch-breakdown-panel {
+  width: min(560px, calc(100% - 32px));
+  margin: 24px auto 0;
+  padding: 18px;
+  border: 1px solid rgba(88, 215, 255, 0.35);
+  border-radius: 12px;
+  background: rgba(4, 18, 31, 0.96);
+  box-shadow: 0 0 28px rgba(88, 215, 255, 0.12);
+}
+
+.branch-breakdown-heading,
+.branch-breakdown-item,
+.branch-breakdown-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.branch-breakdown-heading h3 { margin: 0; font-size: 16px; }
+.branch-breakdown-heading button { border: 0; background: transparent; color: #fff; cursor: pointer; font-size: 24px; }
+.branch-breakdown-list { margin-top: 14px; }
+.branch-breakdown-item,
+.branch-breakdown-total { padding: 9px 0; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+.branch-breakdown-item strong { color: #58d7ff; }
+.branch-breakdown-total strong { color: #ff1493; }

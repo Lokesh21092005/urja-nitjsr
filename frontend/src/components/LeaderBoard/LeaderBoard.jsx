@@ -56,6 +56,7 @@ const LeaderBoard = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [selectedBranch, setSelectedBranch] = useState(null);
 
   /* -----------------------------------------------------
      Fetch backend data
@@ -173,6 +174,10 @@ const LeaderBoard = () => {
   const remainingBranches = useMemo(() => {
     return leaderboard.slice(3);
   }, [leaderboard]);
+
+  const selectedBranchData = useMemo(() => {
+    return leaderboard.find((branch) => branch.branch === selectedBranch) || null;
+  }, [leaderboard, selectedBranch]);
 
   /* -----------------------------------------------------
      Total points
@@ -430,7 +435,13 @@ const LeaderBoard = () => {
                   </div>
 
                   <h3>
-                    {topThree[1].branch}
+                    <button
+                      className="branch-breakdown-button"
+                      type="button"
+                      onClick={() => setSelectedBranch(topThree[1].branch)}
+                    >
+                      {topThree[1].branch}
+                    </button>
                   </h3>
 
                   <div className="podium-points">
@@ -468,7 +479,13 @@ const LeaderBoard = () => {
                   </div>
 
                   <h3>
-                    {topThree[0].branch}
+                    <button
+                      className="branch-breakdown-button"
+                      type="button"
+                      onClick={() => setSelectedBranch(topThree[0].branch)}
+                    >
+                      {topThree[0].branch}
+                    </button>
                   </h3>
 
                   <div className="podium-points">
@@ -502,7 +519,13 @@ const LeaderBoard = () => {
                   </div>
 
                   <h3>
-                    {topThree[2].branch}
+                    <button
+                      className="branch-breakdown-button"
+                      type="button"
+                      onClick={() => setSelectedBranch(topThree[2].branch)}
+                    >
+                      {topThree[2].branch}
+                    </button>
                   </h3>
 
                   <div className="podium-points">
@@ -520,6 +543,33 @@ const LeaderBoard = () => {
             )}
 
           </div>
+
+          {selectedBranchData && (
+            <div className="branch-breakdown-panel" aria-live="polite">
+              <div className="branch-breakdown-heading">
+                <h3>{selectedBranchData.branch} POINT BREAKDOWN</h3>
+                <button
+                  type="button"
+                  aria-label="Close points breakdown"
+                  onClick={() => setSelectedBranch(null)}
+                >
+                  ×
+                </button>
+              </div>
+              <div className="branch-breakdown-list">
+                {Object.entries(selectedBranchData.breakdown || {}).map(([sport, points]) => (
+                  <div className="branch-breakdown-item" key={sport}>
+                    <span>{sport}</span>
+                    <strong>{points} pts</strong>
+                  </div>
+                ))}
+                <div className="branch-breakdown-total">
+                  <span>Total</span>
+                  <strong>{selectedBranchData.points} pts</strong>
+                </div>
+              </div>
+            </div>
+          )}
 
         </section>
       )}
@@ -578,9 +628,13 @@ const LeaderBoard = () => {
                     {/* Branch */}
                     <td>
 
-                      <div className="branch-name">
+                      <button
+                        className="branch-name branch-breakdown-button"
+                        type="button"
+                        onClick={() => setSelectedBranch(branch.branch)}
+                      >
                         {branch.branch}
-                      </div>
+                      </button>
 
                     </td>
 

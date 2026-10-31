@@ -56,10 +56,10 @@ export default function Home() {
           {/* SUBTITLE */}
           <h2
             className="hero-subtitle"
-            aria-label="The Clash of Extremes, The Glory of One"
+            aria-label="WHERE CHAOS MEETS CONTROL"
           >
             <TextType
-              text="The Clash of Extremes, The Glory of One"
+              text="WHERE CHAOS MEETS CONTROL"
               typingSpeed={75}
               initialDelay={2000}
               pauseDuration={2500}
