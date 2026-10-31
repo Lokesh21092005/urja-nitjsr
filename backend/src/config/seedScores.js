@@ -695,18 +695,36 @@ async function seedScores() {
     await mongoose.connect(process.env.MONGO_URI);
     console.log("✅ Connected to MongoDB");
 
-    // Clear existing scores
-    const deleted = await Score.deleteMany({});
-    console.log(`🗑️  Cleared ${deleted.deletedCount} existing score documents`);
+    const resetConfirmed = process.env.CONFIRM_PRODUCTION_RESET === "true";
+    let result;
 
-    // Insert all documents
-    const result = await Score.insertMany(scoreDocuments);
-    console.log(`✅ Inserted ${result.length} score documents`);
+    if (resetConfirmed) {
+      const deleted = await Score.deleteMany({});
+      console.log(`🗑️  Cleared ${deleted.deletedCount} existing score documents`);
+      result = await Score.insertMany(scoreDocuments);
+      console.log(`✅ Inserted ${result.length} score documents`);
+    } else {
+      const operations = scoreDocuments.map((document) => ({
+        updateOne: {
+          filter: {
+            sport: document.sport,
+            gender: document.gender,
+            event: document.event,
+            stage: document.stage,
+          },
+          update: { $set: document },
+          upsert: true,
+        },
+      }));
+      result = await Score.bulkWrite(operations);
+      console.log(
+        `✅ Updated ${result.upsertedCount + result.modifiedCount} score documents; ${result.matchedCount} unchanged`
+      );
+    }
 
-    // Summary
     const sports = [...new Set(scoreDocuments.map((d) => d.sport))];
     console.log(`\n📊 Sports seeded: ${sports.join(", ")}`);
-    console.log(`   Total documents: ${result.length}`);
+    console.log(`   Total documents: ${scoreDocuments.length}`);
 
     console.log("\n🎉 Score seeding complete!");
     process.exit(0);

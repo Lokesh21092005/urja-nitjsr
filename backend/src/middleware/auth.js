@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
+const Admin = require("../models/Admin");
 
 /**
- * Middleware to verify JWT token from Authorization header.
- * Attaches decoded admin payload to req.admin.
+ * Middleware to verify JWT token and that its admin still exists.
+ * Attaches the current admin record to req.admin.
  */
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -13,12 +14,27 @@ const authMiddleware = (req, res, next) => {
 
   const token = authHeader.split(" ")[1];
 
+  let decoded;
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.admin = decoded; // { id, email }
-    next();
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
     return res.status(401).json({ message: "Invalid or expired token." });
+  }
+
+  if (!decoded.id) {
+    return res.status(401).json({ message: "Invalid or expired token." });
+  }
+
+  try {
+    const admin = await Admin.findById(decoded.id).select("-password");
+    if (!admin) {
+      return res.status(401).json({ message: "Admin account no longer exists." });
+    }
+
+    req.admin = admin;
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: "Unable to verify admin account." });
   }
 };
 
