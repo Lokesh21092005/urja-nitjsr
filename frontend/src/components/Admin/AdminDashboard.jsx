@@ -756,6 +756,17 @@ export default function AdminDashboard() {
       ) {
         body.knockout = editData;
       } else {
+        const rows = Array.isArray(editData.data) ? editData.data : [];
+        if (isPositionSport(selectedSport) && rows.length === 0) {
+          const confirmed = window.confirm(
+            `The ${selectedSport} podium table is empty. Save it anyway and clear all existing results?`
+          );
+          if (!confirmed) {
+            setSaving(false);
+            return;
+          }
+          body.allowEmptyPointsTable = true;
+        }
         body.pointsTable = editData;
       }
 

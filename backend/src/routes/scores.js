@@ -4,6 +4,17 @@ const authMiddleware = require("../middleware/auth");
 
 const router = express.Router();
 
+const POSITION_SPORTS = new Set(["Athletics", "Yoga", "Parade"]);
+
+const validatePointsTable = (sport, pointsTable, allowEmpty) => {
+  if (!POSITION_SPORTS.has(String(sport || "")) || !pointsTable) return null;
+  const rows = Array.isArray(pointsTable.data) ? pointsTable.data : [];
+  if (rows.length === 0 && !allowEmpty) {
+    return "This podium table is empty. Add at least one position or confirm that the table should be cleared.";
+  }
+  return null;
+};
+
 /**
  * GET /api/scores
  * Public - no auth required
@@ -63,7 +74,10 @@ router.get("/:id", async (req, res) => {
  */
 router.post("/", authMiddleware, async (req, res) => {
   try {
-    const { sport, gender, event, stage, pointsTable, matches, knockout } = req.body;
+    const { sport, gender, event, stage, pointsTable, matches, knockout, allowEmptyPointsTable } = req.body;
+
+    const validationError = validatePointsTable(sport, pointsTable, allowEmptyPointsTable);
+    if (validationError) return res.status(400).json({ message: validationError });
 
     const score = new Score({
       sport,
@@ -97,12 +111,12 @@ router.post("/", authMiddleware, async (req, res) => {
  */
 router.put("/:id", authMiddleware, async (req, res) => {
   try {
-    const { pointsTable, matches, knockout } = req.body;
+    const { pointsTable, matches, knockout, allowEmptyPointsTable } = req.body;
 
     const score = await Score.findById(req.params.id);
-    if (!score) {
-      return res.status(404).json({ message: "Score not found." });
-    }
+    if (!score) return res.status(404).json({ message: "Score not found." });
+    const validationError = validatePointsTable(score.sport, pointsTable, allowEmptyPointsTable);
+    if (validationError) return res.status(400).json({ message: validationError });
 
     // Update only the fields that are provided
     if (pointsTable) score.pointsTable = pointsTable;
@@ -126,7 +140,10 @@ router.put("/:id", authMiddleware, async (req, res) => {
  */
 router.put("/by-filter/upsert", authMiddleware, async (req, res) => {
   try {
-    const { sport, gender, event, stage, pointsTable, matches, knockout } = req.body;
+    const { sport, gender, event, stage, pointsTable, matches, knockout, allowEmptyPointsTable } = req.body;
+
+    const validationError = validatePointsTable(sport, pointsTable, allowEmptyPointsTable);
+    if (validationError) return res.status(400).json({ message: validationError });
 
     if (!sport || !gender || !event) {
       return res.status(400).json({ message: "sport, gender, and event are required." });
