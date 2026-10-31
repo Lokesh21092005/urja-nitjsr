@@ -442,6 +442,43 @@ const createEmptyKnockoutMatch = () => ({
   winner: "",
 });
 
+const getDefaultKnockout = () => ({
+  rounds: [
+    {
+      name: "Semi-finals",
+      matches: [
+        { id: "SF1", date: "", venue: "", team1: "", team2: "", score1: "", score2: "", winner: "" },
+        { id: "SF2", date: "", venue: "", team1: "", team2: "", score1: "", score2: "", winner: "" },
+      ],
+    },
+    {
+      name: "Final",
+      matches: [
+        { id: "F1", date: "", venue: "", team1: "", team2: "", score1: "", score2: "", winner: "" },
+      ],
+    },
+  ],
+  thirdPlace: {
+    match: {
+      id: "TP1", date: "", venue: "", team1: "", team2: "", score1: "", score2: "", winner: "",
+    },
+  },
+});
+
+const normalizeKnockout = (knockout) => {
+  const defaults = getDefaultKnockout();
+  const rounds = Array.isArray(knockout?.rounds) && knockout.rounds.length > 0
+    ? JSON.parse(JSON.stringify(knockout.rounds))
+    : defaults.rounds;
+
+  return {
+    rounds,
+    thirdPlace: knockout?.thirdPlace?.match
+      ? JSON.parse(JSON.stringify(knockout.thirdPlace))
+      : defaults.thirdPlace,
+  };
+};
+
 /* ─── Main Admin Dashboard ──────────────────────────────── */
 
 export default function AdminDashboard() {
@@ -597,15 +634,7 @@ export default function AdminDashboard() {
           selectedStage === "Knockout" &&
           !isPositionSport(selectedSport)
         ) {
-          setEditData(
-            JSON.parse(
-              JSON.stringify(
-                data[0].knockout || {
-                  rounds: [],
-                }
-              )
-            )
-          );
+          setEditData(normalizeKnockout(data[0].knockout));
         } else {
           const pointsTable =
             data[0].pointsTable || {};
@@ -632,63 +661,7 @@ export default function AdminDashboard() {
           selectedStage === "Knockout" &&
           !isPositionSport(selectedSport)
         ) {
-          setEditData({
-            rounds: [
-              {
-                name: "Semi-finals",
-                matches: [
-                  {
-                    id: "SF1",
-                    date: "",
-                    venue: "",
-                    team1: "",
-                    team2: "",
-                    score1: "",
-                    score2: "",
-                    winner: "",
-                  },
-                  {
-                    id: "SF2",
-                    date: "",
-                    venue: "",
-                    team1: "",
-                    team2: "",
-                    score1: "",
-                    score2: "",
-                    winner: "",
-                  },
-                ],
-              },
-              {
-                name: "Final",
-                matches: [
-                  {
-                    id: "F1",
-                    date: "",
-                    venue: "",
-                    team1: "",
-                    team2: "",
-                    score1: "",
-                    score2: "",
-                    winner: "",
-                  },
-                ],
-              },
-            ],
-
-            thirdPlace: {
-              match: {
-                id: "TP1",
-                date: "",
-                venue: "",
-                team1: "",
-                team2: "",
-                score1: "",
-                score2: "",
-                winner: "",
-              },
-            },
-          });
+          setEditData(getDefaultKnockout());
         } else {
           setEditData({
             headings:
