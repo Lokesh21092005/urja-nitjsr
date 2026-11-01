@@ -226,8 +226,6 @@ export function calculateBranchStandings(documents) {
       for (const row of pointsTable.data) {
         if (!Array.isArray(row)) continue;
         const position = Number.parseInt(row[positionIdx], 10);
-        if (sport.toLowerCase() !== "parade" && gender === "Girls" && position === 3) continue;
-
         const enteredPoints = pointsIdx === -1 ? NaN : Number(row[pointsIdx]);
         const points = Number.isFinite(enteredPoints) && enteredPoints >= 0
           ? enteredPoints
